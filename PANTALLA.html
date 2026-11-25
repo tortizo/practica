@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía de Registro y Documentos — UNEMI</title>
+  <style>
+    :root {
+      --primary: #14365d;
+      --primary-dark: #0d243f;
+      --primary-light: #e8eff7;
+      --accent: #0f6e6e;
+      --accent-light: #e6f4f4;
+      --bg: #f4f6f9;
+      --surface: #ffffff;
+      --text: #1a202c;
+      --text-muted: #4a5568;
+      --border: #cbd5e0;
+      --focus-ring: #d97706;
+      --ok-bg: #e6f6ec;
+      --ok-border: #1e7e48;
+      --ok-text: #13522f;
+      --warn-bg: #fef7e6;
+      --warn-border: #b45309;
+      --warn-text: #78350f;
+      --err-bg: #fdeaea;
+      --err-border: #b91c1c;
+      --err-text: #7f1d1d;
+      --radius: 10px;
+      --shadow: 0 4px 14px rgba(13, 36, 63, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      font-size: 16px;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      background: var(--primary);
+      color: #fff;
+      padding: 0.75rem 1rem;
+      z-index: 1000;
+      border-radius: 0 0 6px 0;
+      font-weight: 600;
+    }
+
+    .skip-link:focus {
+      left: 0;
+    }
+
+    header.uni-header {
+      background: var(--primary);
+      color: #ffffff;
+      padding: 1rem 1.25rem;
+      border-bottom: 4px solid var(--accent);
+    }
+
+    .header-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .uni-brand h1 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .uni-subtitle {
+      margin: 0.2rem 0 0;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #fde68a;
+    }
+
+    .btn-ghost-light {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      color: #ffffff;
+      padding: 0.35rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-ghost-light:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .edu-banner {
+      background: var(--warn-bg);
+      border-bottom: 2px solid var(--warn-border);
+      color: var(--warn-text);
+      padding: 0.55rem 1.25rem;
+      font-size: 0.9rem;
+    }
+
+    .edu-banner-inner {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 880px;
+      margin: 1.25rem auto 2.5rem;
+      padding: 0 1rem;
+    }
+
+    .progress-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.9rem 1.15rem;
+      margin-bottom: 1.15rem;
+      box-shadow: var(--shadow);
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.55rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 25%;
+      transition: width 0.25s ease;
+    }
+
+    .step-pills {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.45rem;
+      margin-top: 0.75rem;
+      padding: 0;
+      list-style: none;
+    }
+
+    .step-pills button {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      padding: 0.45rem 0.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .step-pills button[aria-current="step"] {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .step-pills button.visited {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: #9fb8d6;
+    }
+
+    .step-section {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem;
+      box-shadow: var(--shadow);
+    }
+
+    .step-section.active {
+      display: block;
+    }
+
+    .step-tag {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 0.45rem;
+    }
+
+    h2 {
+      margin: 0.15rem 0 0.65rem;
+      color: var(--primary);
+      font-size: 1.4rem;
+      line-height: 1.25;
+    }
+
+    h3 {
+      margin: 1rem 0 0.45rem;
+      color: var(--primary-dark);
+      font-size: 1.05rem;
+    }
+
+    p {
+      margin: 0 0 0.85rem;
+    }
+
+    .callout {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-light);
+      padding: 0.8rem 1rem;
+      border-radius: 0 8px 8px 0;
+      margin: 0.9rem 0;
+    }
+
+    .callout.warn {
+      border-left-color: var(--warn-border);
+      background: var(--warn-bg);
+      color: var(--warn-text);
+    }
+
+    .callout.ok {
+      border-left-color: var(--ok-border);
+      background: var(--ok-bg);
+      color: var(--ok-text);
+    }
+
+    .callout.err {
+      border-left-color: var(--err-border);
+      background: var(--err-bg);
+      color: var(--err-text);
+    }
+
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.85rem 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .check-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      background: #fafbfc;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 1.15rem;
+      height: 1.15rem;
+      margin-top: 0.15rem;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .check-item label {
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .doc-choice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.85rem;
+      margin: 0.85rem 0 1.1rem;
+    }
+
+    .doc-option {
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.85rem 1rem;
+      background: #ffffff;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.2s, background-color 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .doc-option:hover {
+      border-color: var(--primary);
+    }
+
+    .doc-option[aria-pressed="true"] {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .doc-option-title {
+      font-weight: 700;
+      font-size: 1.02rem;
+      color: var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .doc-status-badge {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .doc-option[aria-pressed="true"] .doc-status-badge {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .field-guide-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.95rem 1rem;
+      margin-bottom: 0.95rem;
+      background: #fcfdff;
+    }
+
+    .field-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .field-title {
+      font-weight: 700;
+      font-size: 1.03rem;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .btn-help {
+      background: var(--accent-light);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      padding: 0.28rem 0.65rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-help:hover {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .help-drawer {
+      background: var(--accent-light);
+      border: 1px solid #99d5d5;
+      border-radius: 7px;
+      padding: 0.65rem 0.85rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    .help-drawer[hidden] {
+      display: none;
+    }
+
+    .compact-rules {
+      margin: 0;
+      padding-left: 1.15rem;
+      font-size: 0.93rem;
+    }
+
+    .compact-rules li {
+      margin-bottom: 0.35rem;
+    }
+
+    /* Simulador visual */
+    .sim-upload-box {
+      border: 2px dashed #94a3b8;
+      border-radius: var(--radius);
+      padding: 1rem;
+      background: #f8fafc;
+      margin-top: 0.75rem;
+    }
+
+    .sim-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin: 0.55rem 0 0.85rem;
+    }
+
+    .btn-sim {
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text);
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-sim[aria-pressed="true"] {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .visual-stage {
+      background: #e2e8f0;
+      border: 1px solid #cbd5e0;
+      border-radius: 8px;
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .visual-stage svg {
+      width: 100%;
+      max-width: 520px;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.14);
+      background: #ffffff;
+    }
+
+    .visual-caption {
+      margin-top: 0.45rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* Ejercicio práctico */
+    .practice-case {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.94rem;
+    }
+
+    .quiz-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.85rem;
+      background: #ffffff;
+    }
+
+    .quiz-options {
+      display: grid;
+      gap: 0.45rem;
+      margin-top: 0.55rem;
+    }
+
+    .quiz-opt-btn {
+      text-align: left;
+      padding: 0.55rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: #f8fafc;
+      cursor: pointer;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    .quiz-opt-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .quiz-opt-btn[aria-pressed="true"] {
+      border-width: 2px;
+      border-color: var(--primary);
+      font-weight: 700;
+    }
+
+    .feedback-box {
+      margin-top: 0.6rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: 7px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .feedback-box.visible {
+      display: block;
+    }
+
+    .feedback-box.correct {
+      background: var(--ok-bg);
+      border: 1px solid var(--ok-border);
+      color: var(--ok-text);
+    }
+
+    .feedback-box.incorrect {
+      background: var(--err-bg);
+      border: 1px solid var(--err-border);
+      color: var(--err-text);
+    }
+
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.35rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn {
+      padding: 0.6rem 1.15rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 2px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--primary-light);
+    }
+
+    footer {
+      max-width: 880px;
+      margin: 0 auto 2rem;
+      padding: 0 1rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .step-pills {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .step-section {
+        padding: 1.05rem;
+      }
+      .nav-bar {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+      .nav-bar .btn {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
+
+  <header class="uni-header">
+    <div class="header-inner">
+      <div class="uni-brand">
+        <h1>Guía de Registro y Carga de Documentos</h1>
+        <p class="uni-subtitle">UNIVERSIDAD ESTATAL DE MILAGRO</p>
+      </div>
+      <button type="button" class="btn-ghost-light" id="btn-top-home" title="Volver al inicio">
+        Inicio
+      </button>
+    </div>
+  </header>
+
+  <div class="edu-banner" role="region" aria-label="Aviso de uso educativo">
+    <div class="edu-banner-inner">
+      <strong>[AVISO]</strong> Guía educativa con <strong>datos ficticios</strong>. No ingreses datos reales ni subas archivos aquí.
+    </div>
+  </div>
+
+  <main id="contenido-principal">
+    <!-- Indicador de avance (4 pasos) -->
+    <section class="progress-card" aria-label="Progreso de la guía">
+      <div class="progress-meta">
+        <span id="progress-label">Paso 1 de 4: Inicio y preparación</span>
+        <span id="progress-percent">25% completado</span>
+      </div>
+      <div class="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" id="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <ul class="step-pills" id="step-pills" aria-label="Secciones de la guía">
+        <li><button type="button" data-step="0" aria-current="step">1. Preparación</button></li>
+        <li><button type="button" data-step="1">2. Datos personales</button></li>
+        <li><button type="button" data-step="2">3. Foto y archivos</button></li>
+        <li><button type="button" data-step="3">4. Práctica y cierre</button></li>
+      </ul>
+    </section>
+
+    <!-- PASO 1: INICIO Y PREPARACIÓN -->
+    <article class="step-section active" data-step-panel="0" tabindex="-1">
+      <span class="step-tag">Paso 1 de 4</span>
+      <h2>Bienvenido: prepara tus datos antes de registrar tus datos</h2>
+      <p>
+        Esta guía rápida te ayuda a llenar tus datos personales y digitalizar tus documentos sin errores para evitar devoluciones en tu expediente.
+      </p>
+
+      <h3>Ten listo antes de comenzar:</h3>
+      <ul class="check-list">
+        <li class="check-item">
+          <input type="checkbox" id="prep-1" />
+          <label for="prep-1"><strong>Cédula o pasaporte original:</strong> Para copiar tus nombres, apellidos y número exactamente como figuran impresos.</label>
+        </li>
+        <li class="check-item">
+          <input type="checkbox" id="prep-2" />
+          <label for="prep-2"><strong>Documento de identidad digitalizado:</strong> Nítido, completo y sin reflejos de luz.</label>
+        </li>
+        <li class="check-item">
+          <input type="checkbox" id="prep-3" />
+          <label for="prep-3"><strong>Requisitos académicos de titulación:</strong> Guardados con nombres claros en tu dispositivo para no confundirlos al subirlos.</label>
+        </li>
+      </ul>
+
+      <div class="nav-bar">
+        <span></span>
+        <button type="button" class="btn btn-primary" id="btn-start">Comenzar &rarr;</button>
+      </div>
+    </article>
+
+    <!-- PASO 2: TIPO DE IDENTIFICACIÓN Y DATOS PERSONALES -->
+    <article class="step-section" data-step-panel="1" tabindex="-1">
+      <span class="step-tag">Paso 2 de 4</span>
+      <h2>Tipo de identificación y datos personales</h2>
+      <p>Elige tu documento para ver las reglas específicas de llenado:</p>
+
+      <div class="doc-choice-grid" role="group" aria-label="Tipo de documento">
+        <button type="button" class="doc-option" id="opt-cedula" aria-pressed="true" data-doc="cedula">
+          <span class="doc-option-title">
+            <span>Cédula de identidad</span>
+            <span class="doc-status-badge" id="badge-cedula">Seleccionado</span>
+          </span>
+          <span>Número solo con dígitos.</span>
+        </button>
+
+        <button type="button" class="doc-option" id="opt-pasaporte" aria-pressed="false" data-doc="pasaporte">
+          <span class="doc-option-title">
+            <span>Pasaporte</span>
+            <span class="doc-status-badge" id="badge-pasaporte">Seleccionar</span>
+          </span>
+          <span>Código con letras y números.</span>
+        </button>
+      </div>
+
+      <div id="doc-specific-instructions" class="callout" aria-live="polite"></div>
+
+      <!-- Campo 1: Nombres -->
+      <div class="field-guide-card">
+        <div class="field-header">
+          <h3 class="field-title">1. Nombres</h3>
+          <button type="button" class="btn-help" aria-expanded="false" aria-controls="help-nombres">? Ayuda</button>
+        </div>
+        <div id="help-nombres" class="help-drawer" hidden>
+          Si tienes dos o más nombres en tu documento, escríbelos todos en el mismo orden. Nunca pongas solo el primero.
+        </div>
+        <div id="spec-nombres"></div>
+      </div>
+
+      <!-- Campo 2: Apellidos -->
+      <div class="field-guide-card">
+        <div class="field-header">
+          <h3 class="field-title">2. Apellidos</h3>
+          <button type="button" class="btn-help" aria-expanded="false" aria-controls="help-apellidos">? Ayuda</button>
+        </div>
+        <div id="help-apellidos" class="help-drawer" hidden>
+          Incluye ambos apellidos y partículas como <em>DE</em>, <em>DEL</em> o <em>DE LA</em> exactamente como constan en tu documento.
+        </div>
+        <div id="spec-apellidos"></div>
+      </div>
+
+      <!-- Campo 3: Número de identificación -->
+      <div class="field-guide-card">
+        <div class="field-header">
+          <h3 class="field-title" id="title-num-id">3. Número de cédula</h3>
+          <button type="button" class="btn-help" aria-expanded="false" aria-controls="help-numid">? Ayuda</button>
+        </div>
+        <div id="help-numid" class="help-drawer" hidden>
+          <span id="help-numid-text"></span>
+        </div>
+        <div id="spec-numid"></div>
+      </div>
+
+      <div class="nav-bar">
+        <button type="button" class="btn btn-secondary" data-nav="prev">&larr; Anterior</button>
+        <button type="button" class="btn btn-primary" data-nav="next">Siguiente: Foto y archivos &rarr;</button>
+      </div>
+    </article>
+
+    <!-- PASO 3: CARGA DE DOCUMENTOS CON REFERENCIA VISUAL FICTICIA -->
+    <article class="step-section" data-step-panel="2" tabindex="-1">
+      <span class="step-tag">Paso 3 de 4</span>
+      <h2>Referencia visual: cómo tomar la foto y subir archivos</h2>
+      <p>
+        Usa este modelo ficticio (<strong id="visual-doc-type-label">Cédula de identidad</strong>) para comprobar que tu foto o escaneo esté bien encuadrado antes de subirlo:
+      </p>
+
+      <div class="sim-upload-box">
+        <div class="sim-buttons" role="group" aria-label="Vistas simuladas">
+          <button type="button" class="btn-sim" data-sim-view="ok" aria-pressed="true">1. Toma correcta</button>
+          <button type="button" class="btn-sim" data-sim-view="blur" aria-pressed="false">2. Borrosa / reflejo</button>
+          <button type="button" class="btn-sim" data-sim-view="crop" aria-pressed="false">3. Recortada</button>
+          <button type="button" class="btn-sim" data-sim-view="wrong" aria-pressed="false">4. Archivo equivocado</button>
+        </div>
+
+        <div id="sim-preview-container" aria-live="polite"></div>
+      </div>
+
+      <div class="field-guide-card" style="margin-top: 1rem;">
+        <div class="field-header">
+          <h3 class="field-title">Reglas rápidas para todos tus adjuntos</h3>
+          <button type="button" class="btn-help" aria-expanded="false" aria-controls="help-up-extra">? Ayuda</button>
+        </div>
+        <div id="help-up-extra" class="help-drawer" hidden>
+          Abre cada archivo desde tu carpeta y haz zoom al 100% antes de subirlo. Si tú no puedes leer los datos con claridad, será devuelto.
+        </div>
+        <ul class="compact-rules">
+          <li><strong>Encuadre y luz:</strong> Coloca el documento sobre un fondo oscuro, sin flash y mostrando los 4 bordes completos.</li>
+          <li><strong>Archivo correcto:</strong> Verifica que el archivo que subes corresponda exactamente al título de cada casilla del formulario.</li>
+          <li><strong>Error frecuente:</strong> Subir fotos borrosas, recortadas, giradas de lado o cargar un comprobante distinto en la casilla de identidad.</li>
+        </ul>
+      </div>
+
+      <div class="nav-bar">
+        <button type="button" class="btn btn-secondary" data-nav="prev">&larr; Anterior</button>
+        <button type="button" class="btn btn-primary" data-nav="next">Siguiente: Práctica y cierre &rarr;</button>
+      </div>
+    </article>
+
+    <!-- PASO 4: PRACTICA Y REVISIÓN FINAL -->
+    <article class="step-section" data-step-panel="3" tabindex="-1">
+      <span class="step-tag">Paso 4 de 4</span>
+      <h2>Practica y revisión final</h2>
+
+      <div class="practice-case">
+        <strong>Ejercicio rápido (caso ficticio):</strong> Un estudiante con cédula <code>0912345678</code> a nombre de <em>LUIS ALBERTO MENDOZA DELGADO</em> seleccionó <code>Pasaporte</code>, escribió solo <code>Luis</code> en nombres y subió una foto recortada del frente de su cédula.
+      </div>
+
+      <!-- Pregunta 1 -->
+      <div class="quiz-item" data-quiz="q1">
+        <strong>1. ¿Qué error cometió en el campo «Nombres»?</strong>
+        <div class="quiz-options">
+          <button type="button" class="quiz-opt-btn" data-q="q1" data-choice="a">A) Ninguno, basta con el primer nombre.</button>
+          <button type="button" class="quiz-opt-btn" data-q="q1" data-choice="b">B) Omitió su segundo nombre («Alberto») y no coincide con su cédula.</button>
+        </div>
+        <div class="feedback-box" id="fb-q1" aria-live="polite"></div>
+      </div>
+
+      <!-- Pregunta 2 -->
+      <div class="quiz-item" data-quiz="q2">
+        <strong>2. ¿Qué error cometió al elegir el tipo de documento y adjuntar el archivo?</strong>
+        <div class="quiz-options">
+          <button type="button" class="quiz-opt-btn" data-q="q2" data-choice="a">A) Eligió «Pasaporte» usando una cédula y subió una foto incompleta/recortada.</button>
+          <button type="button" class="quiz-opt-btn" data-q="q2" data-choice="b">B) Ninguno, cédula y pasaporte son iguales en el sistema.</button>
+        </div>
+        <div class="feedback-box" id="fb-q2" aria-live="polite"></div>
+      </div>
+
+      <button type="button" class="btn btn-secondary" id="btn-reset-practice" style="margin-bottom: 1.2rem;">
+        &#8635; Repetir práctica
+      </button>
+
+      <h3>Lista final antes de enviar tu solicitud oficial</h3>
+      <ul class="check-list">
+        <li class="check-item">
+          <input type="checkbox" id="fin-1" />
+          <label for="fin-1"><strong>Nombres y apellidos completos:</strong> Escritos exactamente igual que en mi documento.</label>
+        </li>
+        <li class="check-item">
+          <input type="checkbox" id="fin-2" />
+          <label for="fin-2"><strong>Tipo y número correctos:</strong> Revisados carácter por carácter.</label>
+        </li>
+        <li class="check-item">
+          <input type="checkbox" id="fin-3" />
+          <label for="fin-3"><strong>Archivos legibles y completos:</strong> Revisados con zoom y subidos en su casilla correspondiente.</label>
+        </li>
+      </ul>
+
+      <div class="callout ok">
+        <strong>Guía completada.</strong> Recuerda que finalizar esta guía es solo orientación previa y <strong>no equivale a la aprobación de tu expediente</strong> en la Universidad Estatal de Milagro.
+      </div>
+
+      <div class="nav-bar">
+        <button type="button" class="btn btn-secondary" data-nav="prev">&larr; Anterior</button>
+        <button type="button" class="btn btn-primary" id="btn-end-home">Volver al inicio</button>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    Guía educativa de orientación &bull; UNIVERSIDAD ESTATAL DE MILAGRO
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const stepNames = [
+        "Inicio y preparación",
+        "Identificación y datos",
+        "Foto y archivos",
+        "Práctica y cierre"
+      ];
+
+      let currentStep = 0;
+      let selectedDoc = "cedula";
+      let simView = "ok";
+      const visitedSteps = new Set([0]);
+
+      const sections = document.querySelectorAll(".step-section");
+      const pillButtons = document.querySelectorAll("#step-pills button");
+      const progressLabel = document.getElementById("progress-label");
+      const progressPercent = document.getElementById("progress-percent");
+      const progressFill = document.getElementById("progress-fill");
+      const progressBar = document.getElementById("progress-bar");
+
+      const docContent = {
+        cedula: {
+          label: "Cédula de identidad",
+          step2Html: `<strong>Reglas para Cédula:</strong> Digita únicamente números (incluyendo el cero inicial si aplica) sin guiones ni espacios. Asegúrate de incluir anverso y reverso legibles.`,
+          nombres: {
+            que: "Todos tus nombres tal como aparecen en la cédula.",
+            ejemplo: "ANDRÉS FELIPE",
+            error: "Omitir el segundo nombre o usar abreviaturas."
+          },
+          apellidos: {
+            que: "Tus dos apellidos completos (incluyendo DE, DEL o DE LA si constan).",
+            ejemplo: "CASTILLO DE LA TORRE",
+            error: "Poner un solo apellido o suprimir partículas."
+          },
+          numId: {
+            title: "3. Número de cédula",
+            help: "Solo números, sin guiones ni espacios.",
+            que: "Secuencia numérica completa de tu cédula.",
+            ejemplo: "0924681357",
+            error: "Omitir el cero inicial o agregar guiones."
+          }
+        },
+        pasaporte: {
+          label: "Pasaporte",
+          step2Html: `<strong>Reglas para Pasaporte:</strong> Código alfanumérico (letras y números) en mayúsculas y sin espacios. Revisa la página biográfica principal y sus líneas inferiores (MRZ).`,
+          nombres: {
+            que: "Todos tus nombres propios como constan en la página biográfica del pasaporte.",
+            ejemplo: "SOFIA VALENTINA",
+            error: "Invertir el orden de los nombres o dejar uno fuera."
+          },
+          apellidos: {
+            que: "Todos tus apellidos tal como figuran en el campo Surname / Apellidos.",
+            ejemplo: "FERNANDEZ MORALES",
+            error: "Escribir solo un apellido si en el pasaporte constan dos."
+          },
+          numId: {
+            title: "3. Número de pasaporte",
+            help: "No confundas la letra «O» con el número «0», ni la letra «I» con el número «1».",
+            que: "Código alfanumérico completo ubicado en la parte superior derecha de la hoja de datos.",
+            ejemplo: "AB1234567",
+            error: "Omitir las letras iniciales o confundir letras con números."
+          }
+        }
+      };
+
+      function buildCompactSpec(data) {
+        return `
+          <ul class="compact-rules">
+            <li><strong>Qué registrar:</strong> ${data.que}</li>
+            <li><strong>Ejemplo ficticio:</strong> <code>${data.ejemplo}</code></li>
+            <li><strong>Error frecuente:</strong> ${data.error}</li>
+          </ul>
+        `;
+      }
+
+      function renderDocDependentContent() {
+        const cfg = docContent[selectedDoc];
+
+        document.getElementById("opt-cedula").setAttribute("aria-pressed", selectedDoc === "cedula" ? "true" : "false");
+        document.getElementById("opt-pasaporte").setAttribute("aria-pressed", selectedDoc === "pasaporte" ? "true" : "false");
+        document.getElementById("badge-cedula").textContent = selectedDoc === "cedula" ? "Seleccionado" : "Seleccionar";
+        document.getElementById("badge-pasaporte").textContent = selectedDoc === "pasaporte" ? "Seleccionado" : "Seleccionar";
+
+        document.getElementById("doc-specific-instructions").innerHTML = cfg.step2Html;
+        document.getElementById("visual-doc-type-label").textContent = cfg.label;
+
+        document.getElementById("spec-nombres").innerHTML = buildCompactSpec(cfg.nombres);
+        document.getElementById("spec-apellidos").innerHTML = buildCompactSpec(cfg.apellidos);
+        document.getElementById("title-num-id").textContent = cfg.numId.title;
+        document.getElementById("help-numid-text").textContent = cfg.numId.help;
+        document.getElementById("spec-numid").innerHTML = buildCompactSpec(cfg.numId);
+
+        renderSimPreview();
+      }
+
+      function getCedulaSvg(mode) {
+        const blurFilter = mode === "blur" ? `filter="url(#blurEffect)"` : "";
+        const glareOverlay = mode === "blur"
+          ? `<ellipse cx="265" cy="118" rx="95" ry="42" fill="rgba(255,255,255,0.88)" />
+             <text x="265" y="122" text-anchor="middle" font-size="11" font-weight="bold" fill="#b91c1c">REFLEJO DE FLASH</text>`
+          : "";
+        const cropMask = mode === "crop"
+          ? `<rect x="285" y="0" width="295" height="240" fill="#334155" />
+             <line x1="285" y1="0" x2="285" y2="240" stroke="#ef4444" stroke-width="3" stroke-dasharray="6,4" />
+             <text x="430" y="115" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffffff">PARTE CORTADA</text>
+             <text x="430" y="133" text-anchor="middle" font-size="10" fill="#cbd5e1">(Falta reverso y borde)</text>`
+          : "";
+
+        return `
+          <svg viewBox="0 0 580 240" role="img" aria-label="Ejemplo ficticio de cédula de identidad">
+            <defs>
+              <filter id="blurEffect"><feGaussianBlur stdDeviation="2.1" /></filter>
+              <linearGradient id="cedBg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#eef5fb" />
+                <stop offset="100%" stop-color="#dbeafe" />
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="580" height="240" fill="#334155" />
+            <g ${blurFilter}>
+              <rect x="18" y="24" width="262" height="172" rx="10" fill="url(#cedBg)" stroke="#93c5fd" stroke-width="1.5" />
+              <rect x="18" y="24" width="262" height="28" rx="10" fill="#14365d" />
+              <rect x="18" y="42" width="262" height="10" fill="#14365d" />
+              <text x="149" y="42" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#ffffff">REPÚBLICA FICTICIA — CÉDULA DE IDENTIDAD</text>
+
+              <rect x="30" y="62" width="66" height="82" rx="5" fill="#cbd5e1" stroke="#64748b" />
+              <circle cx="63" cy="88" r="14" fill="#475569" />
+              <path d="M40,136 C40,116 86,116 86,136 Z" fill="#475569" />
+              <text x="63" y="156" text-anchor="middle" font-size="7.5" fill="#334155" font-weight="bold">EJEMPLO FICTICIO</text>
+
+              <text x="106" y="70" font-size="7" fill="#475569" font-weight="bold">NÚMERO DE IDENTIFICACIÓN</text>
+              <text x="106" y="83" font-size="12" fill="#0f172a" font-weight="bold" font-family="monospace">0924681357</text>
+
+              <text x="106" y="99" font-size="7" fill="#475569" font-weight="bold">APELLIDOS</text>
+              <text x="106" y="110" font-size="9.5" fill="#0f172a" font-weight="bold">CASTILLO DE LA TORRE</text>
+
+              <text x="106" y="125" font-size="7" fill="#475569" font-weight="bold">NOMBRES</text>
+              <text x="106" y="136" font-size="9.5" fill="#0f172a" font-weight="bold">ANDRÉS FELIPE</text>
+
+              <text x="106" y="151" font-size="7" fill="#475569" font-weight="bold">NACIMIENTO</text>
+              <text x="106" y="161" font-size="8.5" fill="#0f172a">14 / MAY / 2002</text>
+
+              <text x="195" y="151" font-size="7" fill="#475569" font-weight="bold">EXPIRACIÓN</text>
+              <text x="195" y="161" font-size="8.5" fill="#0f172a">14 / MAY / 2032</text>
+
+              <path d="M35,176 Q52,164 65,176 T92,174" fill="none" stroke="#1e293b" stroke-width="1.3" />
+              <text x="63" y="187" text-anchor="middle" font-size="6.5" fill="#475569">FIRMA</text>
+
+              <rect x="300" y="24" width="262" height="172" rx="10" fill="url(#cedBg)" stroke="#93c5fd" stroke-width="1.5" />
+              <rect x="300" y="36" width="262" height="22" fill="#1e293b" />
+              <text x="431" y="50" text-anchor="middle" font-size="8" fill="#cbd5e1">REVERSO — DATOS DE REGISTRO</text>
+
+              <text x="316" y="75" font-size="7" fill="#475569" font-weight="bold">LUGAR DE NACIMIENTO</text>
+              <text x="316" y="86" font-size="8.5" fill="#0f172a">CIUDAD CENTRAL — PROVINCIA NORTE</text>
+
+              <text x="316" y="103" font-size="7" fill="#475569" font-weight="bold">ESTADO CIVIL / INSTRUCCIÓN</text>
+              <text x="316" y="114" font-size="8.5" fill="#0f172a">SOLTERO / SUPERIOR</text>
+
+              <rect x="492" y="68" width="52" height="66" rx="4" fill="#e2e8f0" stroke="#94a3b8" />
+              <ellipse cx="518" cy="101" rx="14" ry="20" fill="none" stroke="#64748b" stroke-width="1.2" stroke-dasharray="3,2" />
+
+              <rect x="314" y="146" width="234" height="36" rx="4" fill="#f8fafc" stroke="#cbd5e1" />
+              <text x="320" y="160" font-size="7.5" font-family="monospace" fill="#1e293b">ID&lt;&lt;0924681357&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</text>
+              <text x="320" y="173" font-size="7.5" font-family="monospace" fill="#1e293b">CASTILLO&lt;DE&lt;LA&lt;TORRE&lt;&lt;ANDRES&lt;&lt;</text>
+              ${glareOverlay}
+            </g>
+            ${cropMask}
+            <text x="149" y="218" text-anchor="middle" font-size="10.5" fill="#f8fafc" font-weight="bold">ANVERSO (FRENTE)</text>
+            <text x="431" y="218" text-anchor="middle" font-size="10.5" fill="#f8fafc" font-weight="bold">REVERSO (VUELTA)</text>
+          </svg>
+        `;
+      }
+
+      function getPasaporteSvg(mode) {
+        const blurFilter = mode === "blur" ? `filter="url(#blurPass)"` : "";
+        const glareOverlay = mode === "blur"
+          ? `<ellipse cx="320" cy="95" rx="90" ry="38" fill="rgba(255,255,255,0.9)" />
+             <text x="320" y="99" text-anchor="middle" font-size="11" font-weight="bold" fill="#b91c1c">BRILLO SOBRE EL NÚMERO</text>`
+          : "";
+        const cropMask = mode === "crop"
+          ? `<rect x="70" y="192" width="440" height="58" fill="#334155" />
+             <line x1="70" y1="192" x2="510" y2="192" stroke="#ef4444" stroke-width="3" stroke-dasharray="6,4" />
+             <text x="290" y="216" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#ffffff">ZONA INFERIOR (MRZ) RECORTADA</text>`
+          : "";
+
+        return `
+          <svg viewBox="0 0 580 260" role="img" aria-label="Ejemplo ficticio de pasaporte">
+            <defs>
+              <filter id="blurPass"><feGaussianBlur stdDeviation="2.1" /></filter>
+              <linearGradient id="passBg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fdf8f6" />
+                <stop offset="100%" stop-color="#f3e8ff" />
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="580" height="260" fill="#334155" />
+            <g ${blurFilter}>
+              <rect x="70" y="16" width="440" height="222" rx="10" fill="url(#passBg)" stroke="#c4b5fd" stroke-width="1.5" />
+              <rect x="70" y="16" width="440" height="30" rx="10" fill="#4c1d3d" />
+              <rect x="70" y="36" width="440" height="10" fill="#4c1d3d" />
+              <text x="90" y="35" font-size="10.5" font-weight="bold" fill="#ffffff">PASAPORTE / PASSPORT</text>
+              <text x="490" y="35" text-anchor="end" font-size="9.5" fill="#fde68a" font-weight="bold">REPÚBLICA FICTICIA</text>
+
+              <rect x="90" y="58" width="84" height="106" rx="5" fill="#e2e8f0" stroke="#64748b" />
+              <circle cx="132" cy="92" r="17" fill="#475569" />
+              <path d="M104,152 C104,126 160,126 160,152 Z" fill="#475569" />
+              <text x="132" y="176" text-anchor="middle" font-size="7.5" fill="#475569" font-weight="bold">FOTO FICTICIA</text>
+
+              <text x="192" y="66" font-size="7" fill="#6b7280" font-weight="bold">TIPO</text>
+              <text x="192" y="78" font-size="10" fill="#111827" font-weight="bold">P</text>
+
+              <text x="245" y="66" font-size="7" fill="#6b7280" font-weight="bold">PAÍS</text>
+              <text x="245" y="78" font-size="10" fill="#111827" font-weight="bold">FIC</text>
+
+              <text x="325" y="66" font-size="7" fill="#6b7280" font-weight="bold">N.º DE PASAPORTE</text>
+              <text x="325" y="80" font-size="13" fill="#4c1d3d" font-weight="bold" font-family="monospace">AB1234567</text>
+
+              <text x="192" y="98" font-size="7" fill="#6b7280" font-weight="bold">APELLIDOS / SURNAME</text>
+              <text x="192" y="110" font-size="10.5" fill="#111827" font-weight="bold">FERNANDEZ MORALES</text>
+
+              <text x="192" y="126" font-size="7" fill="#6b7280" font-weight="bold">NOMBRES / GIVEN NAMES</text>
+              <text x="192" y="138" font-size="10.5" fill="#111827" font-weight="bold">SOFIA VALENTINA</text>
+
+              <text x="192" y="154" font-size="7" fill="#6b7280" font-weight="bold">NACIMIENTO</text>
+              <text x="192" y="165" font-size="9" fill="#111827">22 / AGO / 2001</text>
+
+              <text x="325" y="154" font-size="7" fill="#6b7280" font-weight="bold">EXPIRACIÓN</text>
+              <text x="325" y="165" font-size="9" fill="#111827">10 / ENE / 2031</text>
+
+              <rect x="86" y="186" width="408" height="40" rx="4" fill="#ffffff" stroke="#d1d5db" />
+              <text x="96" y="202" font-size="9.2" font-family="monospace" fill="#111827">P&lt;FICFERNANDEZ&lt;MORALES&lt;&lt;SOFIA&lt;VALENTINA&lt;&lt;&lt;&lt;&lt;</text>
+              <text x="96" y="218" font-size="9.2" font-family="monospace" fill="#111827">AB12345674FIC0108228F3101105&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;04</text>
+              ${glareOverlay}
+            </g>
+            ${cropMask}
+          </svg>
+        `;
+      }
+
+      function getWrongDocSvg() {
+        return `
+          <svg viewBox="0 0 580 210" role="img" aria-label="Ejemplo de archivo equivocado">
+            <rect x="0" y="0" width="580" height="210" fill="#334155" />
+            <rect x="130" y="18" width="320" height="174" rx="8" fill="#ffffff" stroke="#cbd5e1" />
+            <rect x="130" y="18" width="320" height="30" rx="8" fill="#64748b" />
+            <text x="290" y="37" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#ffffff">COMPROBANTE DE PAGO #008941 (EJEMPLO)</text>
+            <text x="152" y="72" font-size="9.5" fill="#334155" font-weight="bold">CONCEPTO: ARANCEL DE BIBLIOTECA</text>
+            <text x="152" y="92" font-size="9" fill="#475569">VALOR: $00.00 (SIMULADO)</text>
+            <rect x="152" y="122" width="276" height="44" rx="6" fill="#fdeaea" stroke="#b91c1c" />
+            <text x="290" y="141" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#7f1d1d">ARCHIVO NO CORRESPONDE A IDENTIFICACIÓN</text>
+            <text x="290" y="156" text-anchor="middle" font-size="8.5" fill="#7f1d1d">Pertenece a otra casilla del formulario.</text>
+          </svg>
+        `;
+      }
+
+      function renderSimPreview() {
+        const container = document.getElementById("sim-preview-container");
+        const isCedula = selectedDoc === "cedula";
+
+        if (simView === "wrong") {
+          container.innerHTML = `
+            <div class="visual-stage">${getWrongDocSvg()}</div>
+            <div class="callout err" style="margin-bottom:0;">
+              <strong>[DEVOLUCIÓN] Archivo equivocado:</strong> Subiste un documento distinto en la casilla de tu ${isCedula ? "cédula" : "pasaporte"}.
+            </div>
+          `;
+          return;
+        }
+
+        const svgMarkup = isCedula ? getCedulaSvg(simView) : getPasaporteSvg(simView);
+
+        if (simView === "ok") {
+          container.innerHTML = `
+            <div class="visual-stage">
+              ${svgMarkup}
+              <span class="visual-caption">${isCedula ? "Cédula ficticia: anverso y reverso completos y legibles" : "Pasaporte ficticio: página biográfica completa y zona MRZ visible"}</span>
+            </div>
+            <div class="callout ok" style="margin-bottom:0;">
+              <strong>[ACEPTABLE] Toma correcta:</strong> 4 bordes visibles, buena luz, sin reflejos y todos los datos nítidos.
+            </div>
+          `;
+        } else if (simView === "blur") {
+          container.innerHTML = `
+            <div class="visual-stage">${svgMarkup}</div>
+            <div class="callout err" style="margin-bottom:0;">
+              <strong>[DEVOLUCIÓN] Borrosa o con reflejo:</strong> El flash o desenfoque tapa los números. Apaga el flash y enfoca bien.
+            </div>
+          `;
+        } else if (simView === "crop") {
+          container.innerHTML = `
+            <div class="visual-stage">${svgMarkup}</div>
+            <div class="callout err" style="margin-bottom:0;">
+              <strong>[DEVOLUCIÓN] Recortada:</strong> Faltan bordes o caras del documento. Aleja un poco la cámara al fotografiar.
+            </div>
+          `;
+        }
+      }
+
+      function goToStep(index) {
+        if (index < 0 || index >= sections.length) return;
+        currentStep = index;
+        visitedSteps.add(index);
+
+        sections.forEach((sec, idx) => {
+          sec.classList.toggle("active", idx === currentStep);
+        });
+
+        pillButtons.forEach((btn, idx) => {
+          if (idx === currentStep) {
+            btn.setAttribute("aria-current", "step");
+          } else {
+            btn.removeAttribute("aria-current");
+          }
+          btn.classList.toggle("visited", visitedSteps.has(idx) && idx !== currentStep);
+        });
+
+        const stepNum = currentStep + 1;
+        const pct = Math.round((stepNum / sections.length) * 100);
+        progressLabel.textContent = `Paso ${stepNum} de ${sections.length}: ${stepNames[currentStep]}`;
+        progressPercent.textContent = `${pct}% completado`;
+        progressFill.style.width = `${pct}%`;
+        progressBar.setAttribute("aria-valuenow", String(stepNum));
+
+        sections[currentStep].focus({ preventScroll: false });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      document.getElementById("btn-start").addEventListener("click", () => goToStep(1));
+      document.getElementById("btn-top-home").addEventListener("click", () => goToStep(0));
+      document.getElementById("btn-end-home").addEventListener("click", () => goToStep(0));
+
+      document.querySelectorAll("[data-nav='prev']").forEach(btn => {
+        btn.addEventListener("click", () => goToStep(currentStep - 1));
+      });
+
+      document.querySelectorAll("[data-nav='next']").forEach(btn => {
+        btn.addEventListener("click", () => goToStep(currentStep + 1));
+      });
+
+      pillButtons.forEach(btn => {
+        btn.addEventListener("click", () => goToStep(Number(btn.getAttribute("data-step"))));
+      });
+
+      document.querySelectorAll(".doc-option").forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectedDoc = btn.getAttribute("data-doc");
+          renderDocDependentContent();
+        });
+      });
+
+      document.querySelectorAll(".btn-help").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const drawer = document.getElementById(btn.getAttribute("aria-controls"));
+          const isExpanded = btn.getAttribute("aria-expanded") === "true";
+          btn.setAttribute("aria-expanded", String(!isExpanded));
+          drawer.hidden = isExpanded;
+        });
+      });
+
+      document.querySelectorAll(".btn-sim").forEach(btn => {
+        btn.addEventListener("click", () => {
+          simView = btn.getAttribute("data-sim-view");
+          document.querySelectorAll(".btn-sim").forEach(b => {
+            b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+          });
+          renderSimPreview();
+        });
+      });
+
+      const quizAnswers = {
+        q1: {
+          correct: "b",
+          explanations: {
+            a: "[INCORRECTO] Omitir el segundo nombre provoca discrepancias con tu cédula y genera devolución.",
+            b: "[CORRECTO] Debes escribir todos tus nombres completos («LUIS ALBERTO») igual que en tu documento."
+          }
+        },
+        q2: {
+          correct: "a",
+          explanations: {
+            a: "[CORRECTO] El tipo de documento debe coincidir con el archivo adjunto, y la foto debe estar completa y legible.",
+            b: "[INCORRECTO] Cédula y pasaporte tienen reglas distintas; además, una foto recortada siempre es rechazada."
+          }
+        }
+      };
+
+      document.querySelectorAll(".quiz-opt-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const qKey = btn.getAttribute("data-q");
+          const choice = btn.getAttribute("data-choice");
+          const qData = quizAnswers[qKey];
+          const fbEl = document.getElementById(`fb-${qKey}`);
+
+          document.querySelectorAll(`.quiz-opt-btn[data-q="${qKey}"]`).forEach(b => {
+            b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+          });
+
+          const isOk = choice === qData.correct;
+          fbEl.textContent = qData.explanations[choice];
+          fbEl.className = `feedback-box visible ${isOk ? "correct" : "incorrect"}`;
+        });
+      });
+
+      document.getElementById("btn-reset-practice").addEventListener("click", () => {
+        document.querySelectorAll(".quiz-opt-btn").forEach(b => b.setAttribute("aria-pressed", "false"));
+        document.querySelectorAll(".feedback-box").forEach(fb => {
+          fb.textContent = "";
+          fb.className = "feedback-box";
+        });
+      });
+
+      renderDocDependentContent();
+    })();
+  </script>
+</body>
+</html>
